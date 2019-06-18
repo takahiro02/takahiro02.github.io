@@ -133,10 +133,14 @@ aside {
   background-color: #115DF6;
 }
 
-aside img {
-    max-height: 40%;
+aside figure {
+    margin: 0;
+    color: white;
 }
 
+aside img {
+    height: 25em;
+}
 
 aside li {
   padding-bottom: 10px;
