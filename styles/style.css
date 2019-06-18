@@ -6,16 +6,17 @@ html, body {
 }
 
 html {
-  font-size: 13px;
-  background-color: #3FA1BF;
+  font-size: 16px;
+  /* background-color: #3FA1BF; */  
 }
 
 body {
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
+  background-image: url('../images/evening-sea-shore.jpg');
 }
 
-/* || typography */
+/* smaller elements */
 
 h1, h2, h3 {
   font-family: 'Sonsie One', cursive;
@@ -80,7 +81,7 @@ nav a {
   font-size: 2rem;
   text-transform: uppercase;
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 nav form {
@@ -108,8 +109,8 @@ input[type="submit"] {
   color: white;
 }
 
-/* || main layout */
 
+/* || main layout */
 main {
   display: flex;
 }
@@ -124,16 +125,30 @@ main dl {
     width: 40em
 }
 
+
+/* style <aside> */
 aside {
   flex: 1;
   margin-left: 10px;
-  background-color: #ff80ff;
+  background-color: #115DF6;
 }
+
+aside img {
+    max-height: 40%;
+}
+
 
 aside li {
   padding-bottom: 10px;
 }
 
+
+/* style <footer> */
 footer {
-  margin-top: 10px;
+    margin-top: 10px;
+    background-color: #115DF6;
+}
+
+footer p, footer a {
+    color: white;
 }
