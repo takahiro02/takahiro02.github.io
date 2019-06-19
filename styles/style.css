@@ -46,7 +46,7 @@ html, body {
 
 body {
   width: 80%;
-  margin: 0 auto;
+  margin: 0 auto 5% auto;
   /* set background-image */
   background-image: url('../images/evening-sea-shore.jpg');
   background-repeat: no-repeat;
