@@ -1,3 +1,42 @@
+/* font layout */
+html {
+    font-family: Times, Helvetica, serif;
+    font-size: 10px;			/*so that it is easy to calculate 1em */
+}
+
+h1 {
+    font-size: 5em;		/* == 20px */
+}
+
+nav {
+    font-size: 2.2rem;
+}
+
+nav input {
+    font-size: 2rem;
+}
+
+main { /* notice: the order of CSS rule matters here. */
+    font-size: 2.2rem;
+}
+
+h2 { /* by setting font-size of h2 later than main, I can overwrite it */
+    font-size: 4rem;
+}
+
+h3 {
+  font-size: 3rem;
+}
+
+aside {
+    font-size: 1.8rem;
+}
+
+footer {
+    font-size: 2rem;
+}
+
+    
 /* || General setup */
 
 html, body {
@@ -5,51 +44,24 @@ html, body {
   padding: 0;
 }
 
-html {
-  font-size: 16px;
-  /* background-color: #3FA1BF; */  
-}
-
 body {
   width: 80%;
   margin: 0 auto;
+  /* set background-image */
   background-image: url('../images/evening-sea-shore.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
-/* smaller elements */
 
-h1, h2, h3 {
-  font-family: 'Sonsie One', cursive;
-  color: #2a2a2a;
-}
-
-p, input, li {
-  font-family: 'Open Sans Condensed', sans-serif;
-  color: #2a2a2a;
-}
+/* || header layout */
 
 h1 {
-  font-size: 4rem;
   text-align: center;
   color: white;
   text-shadow: 2px 2px 10px black;
 }
-
-h2 {
-  font-size: 3rem;
-  text-align: center;
-}
-
-h3 {
-  font-size: 2.2rem;
-}
-
-p, li {
-  font-size: 1.6rem;
-  line-height: 1.5;
-}
-
-/* || header layout */
 
 nav, article, aside, footer {
   background-color: white;
@@ -78,7 +90,6 @@ nav li {
 
 nav a {
   display: inline-block;
-  font-size: 2rem;
   text-transform: uppercase;
   text-decoration: none;
   color: white;
@@ -93,7 +104,6 @@ nav form {
 }
 
 input {
-  font-size: 1.6rem;
   height: 32px;
 }
 
@@ -110,7 +120,20 @@ input[type="submit"] {
 }
 
 
-/* || main layout */
+/* || main article layout */
+
+p, input, li {
+  color: #2a2a2a;
+}
+
+h2 {
+  text-align: center;
+}
+
+p, li, dl {
+  line-height: 1.5;
+}
+
 main {
   display: flex;
 }
@@ -119,17 +142,11 @@ article {
   flex: 4;
 }
 
-main dl {
-    margin-left: auto;
-    margin-right: auto;
-    width: 40em
-}
 
-
-/* style <aside> */
+/* main aside layout */
 aside {
   flex: 1;
-  margin-left: 10px;
+  margin-left: 0;
   background-color: #115DF6;
 }
 
@@ -139,7 +156,7 @@ aside figure {
 }
 
 aside img {
-    height: 25em;
+    height: 20em;
 }
 
 aside li {
@@ -147,12 +164,15 @@ aside li {
 }
 
 
-/* style <footer> */
+/* footer layout */
 footer {
     margin-top: 10px;
     background-color: #115DF6;
+    padding: 10px;
 }
 
 footer p, footer a {
     color: white;
+    margin: 0;
+    text-align: center;
 }
