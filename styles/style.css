@@ -134,8 +134,23 @@ h2 {
   text-align: center;
 }
 
+h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
 p, li, dl {
   line-height: 1.5;
+}
+
+dl {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+dl > dd {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
 }
 
 main {
