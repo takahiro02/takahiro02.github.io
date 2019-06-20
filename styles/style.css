@@ -68,14 +68,15 @@ nav {
 }
 
 nav {
-  height: 50px;
+  height: 3rem;
   background-color: #0905F9;
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 
 nav ul {
-  padding: 0;
+    padding: 0;
+    margin: 0;
   list-style-type: none;
   flex: 2;
   display: flex;
@@ -92,10 +93,14 @@ nav a {
   text-transform: uppercase;
   text-decoration: none;
   color: white;
+  line-height: 3rem;
+  width: 80%;
+  background-color: rgba(97, 97, 249, 0.5)
 }
 
 nav a:hover {
     color: gray;
+    background-color: rgba(97, 249, 173, 0.5)
 }
 	     
 
