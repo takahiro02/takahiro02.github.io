@@ -73,6 +73,7 @@ main .gallery {
 }
 
 .gallery img {
+
     /* offset-x | offset-y | blur-radius | spread-radius | color */
     box-shadow: 0.5vw 0.5vh 2px 1px rgba(77, 77, 77, 0.2);
     /* https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow */
