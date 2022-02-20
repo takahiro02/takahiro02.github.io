@@ -1,1 +1,0 @@
-this is just a dummy text file to create a new directory of "sent-data"
