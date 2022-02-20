@@ -1,0 +1,214 @@
+
+
+/* 
+   In CSS, if there are 2 or more styling instructions that are conflicting, the last 
+   one is used, if they have the same specificity (this concept is called cascade). 
+
+   Even when 2 CSS instructions are conflicting, if the former one has more specificity,
+   that instruction wins even though it's placed before the 2nd one (this is called specificity).
+   For example, a class selector (e.g. .class_name {} ) has more weight than an element selector
+   (e.g. h1 {} ).
+   Note that only a conflicting property is overriden. This helps to avoid repetition of CSS.
+   The specificity of CSS selector is score-based. For example, inline style="..." attribute
+   directly inside an element earns 1,000 points. Or, give +100 points for each ID selector
+   contained in an overall selector, e.g. h2 ul #id_name #id_name2 {} gets 200 points (+ 2 
+   points for the 2 element selectors).
+   For more rules, see the website below. In actual settings, you don't need to lower specificity
+   levels, because to beat 1 ID selector, you need 10 class selectors, for example.
+   There is a keyword that makes a rule with it supercedes any specificities, which is
+   "!important". For example, p {color: green !important;} always overrides any conflicting rules
+   , unless another rule also uses "!important" keyword, inside a selector with equal or more 
+   specificity than the 1st one, or that comes after the 1st one. But "!important" is advised
+   not to be used, since it breaks usual cascading rules.
+
+   There is another concept in CSS called inheritance. It means some CSS instructions applied
+   to an (html) element are inherited to its child elements, such as "color" and "font-family".
+   But some are not inherited, such as "width".
+   Every CSS property (e.g. color) can take inheritance controlling keywords, such as "inherit".
+   E.g. 
+   p {
+     color: inherit;
+   }
+
+   This concept of specificity, cascading, and inheritance are explained in 
+   https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_and_inheritance
+*/
+
+/* 
+   In this CSS, to adjust block sizes for both laptop/desktop and smartphone, I make all the 
+   length units relative to the width/height of the viewport.
+   When % is used, it's relative to some parent size or block width, and they are relative to
+   the viewport size, thus % also becomes relative to the viewport size.
+   
+   But it's a dangerous idea to set font-size only with viewport size, since in that case, 
+   website users cannot zoom into the characters (they stay relative to the viewport size).
+   To avoid that problem, for font-size, we should use a combination of some absolute unit
+   (such as pixel, or rem (root (<html> element) font-size), if the root has some absolute 
+   font-size) + a viewport unit, e.g. font-size: calc(1.5rem + 3vw);
+   See https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#using_viewport_units_for_responsive_typography
+*/
+
+/* || page-specific styles */
+/* || header style */
+/* || subheading (subheading + name-changing button) */
+.sub_heading {
+    display: grid;
+    /* I made this grid (2-D) rather than flex (1-D spanning), since in display:grid;, I
+     can choose from which column (and row) the item start and at which column it ends.
+     so although I choose grid, the number of rows is just 1 */
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* 1fr = 1 fraction of the remaining space */
+    /* so all column lengths being set to 1fr means the ratio of column lengths is 
+     1:1:1:1 */
+    grid-template-rows: 1fr;
+}
+header h1 span {
+    font-size: 70%;		/* % is relative to the parent element's font-size */
+    text-align: center;
+    display: block;
+    grid-column: 2 / 4;
+    /* specifies the start and end column. Be careful of the end column index. 4 means
+       it ends before reaching the 4th element, so it spans from column 2 to column 3. */
+}
+#name_change_button {
+    font-size: 30%;
+    /* % in this case is relative to its parent's font-size. This button is nested in div,
+     and div is nested h1 element. Since font-size is inherited from parent to child, div's
+     font-size is the same as h1's font-size*/
+    grid-column: 4;
+    /* When only 1 number is provided, it specifies that this element resides only in
+       this column (or row if grid-row is used) */
+    height: 50%;
+    position: relative;		/* relative to the current normal flow position */
+    top: 30%;
+    /* Since without "position" and "top" properties, the button sticks to the top half of the
+     grid cell, I move it by relative positioning. "top"'s 30% is relative to the current height*/
+}
+
+/* || Transition gallery styles */
+figure {
+    /* <figure>'s default display mode is block */
+  margin: 3vh auto 0;		/* top, horizontal, bottom */
+
+  width: 40vw;
+  overflow: hidden;
+  /* to add animation to the appearence of the image. Without this property set, the 
+     containing block of the image, which is <figure>, this one, would get wider.*/
+
+  display: flex;
+  flex-direction: column;
+}
+#gallery_link {
+    /* display: block; */
+    /* <a> is by default inline element. In inline mode, <a>'s width and height (hyperlink 
+       region) behaved strangely. The width of the region became its container's (<figure>'s)
+       width, and its height became its child element's (<img>'s) height.
+       A similar problem is asked here:
+       https://stackoverflow.com/questions/18585069/
+       inline-block mode solves this problem, but it cannot make itself centered in the 
+       containing block with margin: 0 auto;
+       To make the link automatically centered with auto value, we need to set it to 
+       block mode, not inline-block.
+       <- It turns out that although on Chrome's inspector mode, the hyperlink region of <a>
+          looks matching the shape of <img> inside, the actual hyperlink region has some blank
+	  space, where the image doesn't exist, but still the space is clickable and leads to
+	  the linked page. In addition, with this <a>'s display being block, the initial
+	  width and height of <a>'s content doesn't change when a different photo with
+	  different shapes from the 1st photo, i.e. The hyperlink region stays the same even when
+	  photos of different size are selected.
+       This kind of problem is not seen in gallery_main.html's <a> and <img>. Why? I don't know.
+       Maybe their containing block matter (in main.html, it is <figure>, or <div>, but
+       in gallery_main.html, it is <div>, inside of which is gridded by display: grid;)? 
+       Since the container is the same <div>, display mode of it may be the key difference.
+       (relative positioning is another difference, but I checked that even though I deleted
+       relative position from #gallery_photo, the hyperlink region is still larger than the size
+       of the photos)
+       -> Bingo!! When I set its containing block (<figure>) to display: flex; (because it's
+          1-D direction), suddenly the hyperlink region matches the photo sizes, even when
+	  switching photos!! I don't know why though...
+	  And after using display: flex; to <figure>, this <a> can use margins specified below,
+	  even though this <a> is inline. Why??
+   */
+    margin: 0 auto 1vh;
+    /* Also, don't add margin to <img> inside <a> for hyperlink, because that would create
+       some blank space over which hyperlink region is active. That problem is also mentioned
+       in the above stackoverflow link (2nd answer's comment section) */
+}
+#gallery_photo {
+    max-width: 40vw;
+    max-height: 40vh;
+    margin: 0 auto;		/* top, horizontal*/
+    display: block;
+    /* without display: block, <img>'s default display value, "inline" is applied to it, and
+       in that case, even if we set the left and right margin to "auto", the image is not 
+       placed at the center */
+    position: relative;
+}
+#gallery_caption {
+    display: block;
+    text-align: center;
+    width: 40vw;
+    margin: 0 auto 1vh;
+    font-size: calc(1rem + 0.5vmin);
+}
+
+
+/* || figure control buttons */
+.control_btn {
+    margin: 0;
+    padding: 0 0 0 32vw;
+    /* to align the left edge of the control buttons to the gallery, I add 30vw to
+       padding-left. In this case, since I use <ul> or list element, which is supposed
+       to be on the left of the page, even if I set the horizontal padding to "auto",
+       the buttons are not on center.
+       This is the semantic difference from <a> or <img>, which are automatically centered
+       when I set margin to "auto", with <img>'s display mode being "block", in 
+       gallery/gallery_main.html
+   */
+}
+ul li {
+    display: inline-block;
+    /* to make the list bullet points laid horizontally (if they are displayed as block,
+       they would be aligned vertically). Just "inline" is not enough either, becase
+       inline cannot have padding or margin values. 
+       https://medium.com/@DaphneWatson/css-display-properties-block-inline-and-inline-block-how-to-tell-the-difference-7d3a1e6e3051#:~:text=When%20it%20comes%20to%20margins,block%20elements%2C%20as%20shown%20below.
+   */
+    list-style: none;
+    /* What's used for control buttons is not the bullet points, but the background color
+       of them. So the original bullet points are deleted by "list-style: none;" */
+
+    width: 15px;
+    height: 15px;
+    background-color: rgba(124,120, 247, 0.8);
+    border-radius: 50%;
+    margin-right: 15px;		/* without margin-right, all list are touching*/
+    cursor: pointer;
+}
+ul .active {
+    background-color: rgba(250,81, 81, 0.8);
+}
+.slidein {
+    animation: slidein 1s linear;
+    /* the first value "zoomout" is animation-name, which can be any name, like a function name.
+       The animation-name rule is specified afterward by @keyframes. This is like a function. */
+}
+@keyframes slidein {
+    0%{
+	bottom: 10vh;
+	/* this bottom property is connected position property. The <img>'s position is set 
+	   to relative, so that the caption appears below the photo (relative positioning keeps
+	   the original element block space in its normal flow, and moves the actual element
+	   block relative to its original position), and the phoro appears from the top.
+	   Since overflow: hidden; is set to <figure> element, 
+       */
+    }
+    /* this tells the browser that at 0% of the way of the animation (at the beginning), 
+       apply the rule above. This "0%" can be substituted by "from" 
+       https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations#adding_another_keyframe
+   */
+    100%{
+	bottom: 1vh;
+    }
+}
+
+/* || navigation bar style */
+

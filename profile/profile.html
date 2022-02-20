@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+
+<!-- HTML is parsed permissibly by browsers, meaning even though some syntax errors exist
+     in the HTML script, browsers display it anyway, ignoring the syntax-error part, or
+     inferring the syntax if some closing tags are missed.
+     So if I find some html elements are ignored, it's most probably because of some syntax
+     errors happening in the ignored part.
+  -->
+
+<!-- By the way, indentation in emacs is affected by an html element in comments (e.g. <p></p>).
+     So to preserve a good indent style, try not writing html elements with angle brackets
+  -->
+  
+<html lang="en-US">
+  <!--- adding a language setting helps search engine result. It also helps screen readers
+    for those with visual impairments --->
+  <head>
+    <meta charset="utf-8">
+    <title class="class1">Taka's homepage</title>
+    <!--  head element describes metadata of this html script. Its content will not appear 
+	  on the webpage. 
+	  title element appears on the tab of the webpage. It is also used as a suggested
+	  bookmark name. 
+      -->
+    <meta name="author" content="Takahiro Furuya">
+    <!--- this element is optional, but tells the author of this HTML script --->
+    <meta name="description" content="Takahiro F.'s homepage">
+    <!--- meta name="description" content="..."> 's content appears on web search result 
+	pages.  --->
+    
+    <link href="../styles/common_style.css" rel="stylesheet">
+    <link href="../styles/profile_style.css" rel="stylesheet">
+    <!--- applying the external CSS stylesheet to this page. 
+	rel="stylesheet" indicates that this link is for CSS --->
+    <!-- we can add multiple CSS files to 1 page. It is often a good idea to do so to
+      break down CSS rules into smaller chunks and make them more maintainable.
+      For example, 1 CSS file contains a general site-wide rules, while another CSS file 
+      contains page-specific rules, then I can apply the page-specific CSS only to the page
+      the CSS is designed for.
+      see https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Organizing#break_large_stylesheets_into_multiple_smaller_ones
+      -->
+    <link href="https://fonts.googleapis.com/css?family=Faster+One&display=swap" rel="stylesheet">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <!--- adding a custom icon to the webpage --->
+    
+    <script src="../scripts/common.js" defer></script>
+    <!--- javascript can be loaded in <head> element. But to make sure all HTML elements
+	are loaded before running the Javascript, we need the keyword "defer" --->
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- this is to tell mobile devices to report their true viewport width, because they 
+	 tend to lie about their viewport width.
+	 from https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#the_viewport_meta_tag
+      -->
+    
+    </head>
+    
+  <body>
+    <!-- <p>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br></p> -->
+    
+    <!-- logo and menu button. Since they are out of normal flow order, I place them
+	 outside of any element -->
+    <!--- logo image link to the home page --->
+    <a href="../main.html" class="page_logo" id="logo_link">
+      <img src="../gengar.png" alt="My Webpage Logo, Gengar!" class="page_logo">
+    </a>
+    
+    <!--- drop down menu  --->
+    <nav class="menu_dropdown">
+      <!--- class attribute can be used for any HTML element, and the class name can
+	  be used to point to that element with CSS or Javascript --->
+      <button onclick="dropdown_menu_clicked()" class="dropdown_button">
+	+
+      </button>
+
+      <div id="menu_dropdown_content" class="dropdown_content">
+	<!--- the difference between id and class attributes is that id can be used only
+	    for 1 unique element in a page, while class can be used for multiple elements 
+	  --->
+	<a href="../main.html">Home</a>
+	<a href="../gallery/gallery_main.html">Gallery</a>
+	<a href="../blog/blog_main.html">Blog</a>
+      </div>
+    </nav>
+
+    <main>
+      <header>
+	<h2>Takahiro F.	</h2>
+	<!-- p element is not allowed inside h1 element. Only "phrasing contents" are allowed
+	     inside h1 - h6 heading elements. For phrasing contents, see
+	     https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#phrasing_content
+	  -->
+      </header>
+
+      <img class="prof_img" src="../images/fishing.jpg" alt="Takahiro F. fishing a seaweed">
+
+      <ul class="self_info">
+	<li>Born in Ibaraki prefecture, Japan</li>
+	<li>Likes fishing, tennis, karate, and subculture stuff (manga, etc)</li>
+	<li>Interested in Computer and Environment</li>
+	<li>Doing research on error reduction in a satellite data at the School of Civil and Environmental Engineering, Georgia Tech</li>
+      </ul>
+      
+    </main>
+      
+    <!-- general footer -->
+    <footer>
+      <p>contact:
+    	<a href="mailto:furuya02takahiro@gmail.com" id="email">furuya02takahiro@gmail.com</a>
+      </p>
+    </footer>
+  </body>
+</html>

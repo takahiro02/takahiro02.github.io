@@ -1,0 +1,287 @@
+
+/* 
+   In CSS, if there are 2 or more styling instructions that are conflicting, the last 
+   one is used, if they have the same specificity (this concept is called cascade). 
+
+   Even when 2 CSS instructions are conflicting, if the former one has more specificity,
+   that instruction wins even though it's placed before the 2nd one (this is called specificity).
+   For example, a class selector (e.g. .class_name {} ) has more weight than an element selector
+   (e.g. h1 {} ).
+   Note that only a conflicting property is overriden. This helps to avoid repetition of CSS.
+   The specificity of CSS selector is score-based. For example, inline style="..." attribute
+   directly inside an element earns 1,000 points. Or, give +100 points for each ID selector
+   contained in an overall selector, e.g. h2 ul #id_name #id_name2 {} gets 200 points (+ 2 
+   points for the 2 element selectors).
+   For more rules, see the website below. In actual settings, you don't need to lower specificity
+   levels, because to beat 1 ID selector, you need 10 class selectors, for example.
+   There is a keyword that makes a rule with it supercedes any specificities, which is
+   "!important". For example, p {color: green !important;} always overrides any conflicting rules
+   , unless another rule also uses "!important" keyword, inside a selector with equal or more 
+   specificity than the 1st one, or that comes after the 1st one. But "!important" is advised
+   not to be used, since it breaks usual cascading rules.
+
+   There is another concept in CSS called inheritance. It means some CSS instructions applied
+   to an (html) element are inherited to its child elements, such as "color" and "font-family".
+   But some are not inherited, such as "width".
+   Every CSS property (e.g. color) can take inheritance controlling keywords, such as "inherit".
+   E.g. 
+   p {
+     color: inherit;
+   }
+
+   This concept of specificity, cascading, and inheritance are explained in 
+   https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_and_inheritance
+*/
+
+/* 
+   In this CSS, to adjust block sizes for both laptop/desktop and smartphone, I make all the 
+   length units relative to the width/height of the viewport.
+   When % is used, it's relative to some parent size or block width, and they are relative to
+   the viewport size, thus % also becomes relative to the viewport size.
+   
+   But it's a dangerous idea to set font-size only with viewport size, since in that case, 
+   website users cannot zoom into the characters (they stay relative to the viewport size).
+   To avoid that problem, for font-size, we should use a combination of some absolute unit
+   (such as pixel, or rem (root (<html> element) font-size), if the root has some absolute 
+   font-size) + a viewport unit, e.g. font-size: calc(1.5rem + 3vw);
+   See https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#using_viewport_units_for_responsive_typography
+*/
+
+/* 
+   In this style sheet, style rules common to site-wide pages are written
+ */
+
+/* || Common site styles */
+/* html element affects everything including <body> and all elements in <body> */
+/* But I guess if more specific settings are set for specific elements by later style 
+ instructions, they would override this general html settings */
+html {
+    font-size: 16px;
+    /* For avoiding the issue mentioned above in the 2nd comment block from the top,
+       it is convenient to set an absolute size to the font-size of the root element, 
+       so that in the later font-sizes, I can use unit "rem" (html's font-size)
+     */
+  font-family: monospace; /* this should be the rest of the output you got from Google fonts */
+  /* "font-size" and "font-family" are inherited to all child elements */
+  
+  background-color: #5569f7F;
+  background-image: url('../images/background1.jpeg');
+  background-repeat: no-repeat;
+  /*background-position: center;*/
+  /* without centering, it looks nicer */
+  background-size: cover;
+  background-attachment: fixed;
+  /* to make the background image fixed as the screen is scrolled, use
+     Background-attachment property */
+}
+
+/* make every CSS box models border-box model (the alternative box model, where "width" and
+   "height" properties include padding in them) 
+The following is from https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/The_box_model#the_alternative_css_box_model */
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* || logo icon and menu button (and its items) */
+#logo_link {		     /* select the element with ID "logo_link" */
+    /* make the shape of the link circular */
+    /*border-radius: 50%;*/		/* 50 % : relative to the box width */
+    /* even if the shape of the link box is changed to circle, the activation shape stays
+     the original box */
+}
+.page_logo {                 /* select the elements with class name "page_logo" */
+    width: 10vw;
+    /* 
+       vw = viewport width, so that the logo size is changed appropriately even when viewing
+       smartphone. 1 vw = 1 % of the viewport width
+   */
+    position: fixed;
+    top: 2vh;
+    left: 1vw;
+}
+/* || menu icon and dropdown */
+.menu_dropdown {
+    position: fixed;
+    top: 2vh;
+    right: 1.5vw;
+
+    z-index: 1;
+    /* The child's stacking order is limited by its parent's z-index.
+       When I want the dropdown content to be on top of the #name_change_button in <main>,
+       even if I change z-index of #menu_dropdown_content, if its parent (this <div>) has
+       z-index 0, when comparing the #menu_dropdown_content with #name_change_button, their
+       parent elements's z-index limits that of #menu_dropdown_content, and #name_change_button
+       comes on top of #menu_dropdown_content.
+       See the 4th reason of https://www.freecodecamp.org/news/4-reasons-your-z-index-isnt-working-and-how-to-fix-it-coder-coder-6bc05f103e6c/
+   */
+}
+.menu_dropdown button {
+    width: 7vmin;
+    height: 7vmin;
+    border: solid;
+    border-width: thin;
+    background-color: rgba(243, 249, 253, 0.7);
+    padding: 1vmin 0.5vmin;
+    border-radius: 30%;
+    /* position: relative; */
+    /* bottom: 6vmin; */
+
+    font-size: calc(1rem + 2vmin);
+    /* when the viewport becomes smartphone size, the character "Menu" is out of the box */
+}
+.dropdown_content {
+    display: none;
+    /* When the menu button is not clicked, the dropdown content is hidden */
+    z-index: 1;
+    /* z-index determines which element comes on top of another. Positioned elements (I guess
+       all elements whose position property is other than static) are automatically laid on
+       top over static elements. But when 2 positioned elements overlap each other, this
+       z-index comes into play.
+       All elements' default z-index is 0, so giving dropdown content z-index 1 makes this 
+       dropdown be laid on top of other positioned elements.
+       https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning#introducing_z-index
+   */
+
+    position: absolute;
+    /* By making the dropdown content absolute positioned, the <div> element is taken out of
+       the flow of the block element stack, and treated as if it did not exist.
+       Then, the positioning of the outer <div> with class "menu_dropdown" is done only with the
+       remaining element, <button>.
+       That way, we can prevent the button from shifting back and forth every time the button
+       is pushed, and the hidden content appears (because if the dropdown content is not removed
+       from the flow of the outer <div>, as the hidden content appears, that is taken into 
+       consideration for the entire positioning of the entire <div> (outer <div>), and appearing
+       dropdown content pushes the overall menu content to the left a little (because the 
+       overall <div> is fixed positioned, and the right position is measured from the right edge
+       of the current viewport to the right edge of the outer 
+       <div> content. If it includes inner <div>, and the inner <div> content appears, which
+       expands the overall width of the outer <div>, that pushes the outer <div> to the left
+       a little to keep the fixed positioning))
+   */
+    right: 0;
+    /* 
+       Absolute positioned elements are positioned relative to an ancestor element with 
+       position value other than "static". Since the default position value is static, if
+       no ancestor element explicitly set their position property, their position values are all
+       static, and the containing block becomes the "initial containing block", which is the
+       viewport.
+       https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
+       https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning#positioning_contexts
+       In this case, since this <div>'s parent element, the outher <div>, has explicit position
+       value "fixed", the containing block of this <div> becomes the outer <div>, and the
+       positioning of this <div> becomes relative to the outer <div>.
+       The default positioning of stacked element blocks seems to be left-alighned. By rihgt: 0;
+       we change it to right-alighned.
+   */
+
+    background-color: rgba(192, 215, 219, 0.8);
+    min-width: 160px;
+}
+.dropdown_content a {
+    display: block;
+    /* Since the default display mode of <a> is inline, which make them align horizontally,
+     instead of vertically, we change it to block display mode */
+
+    font-size: calc(1rem + 0.7vmin);
+    /* avoid setting font-size only with units relative to viewport size */
+
+    color: #4f59b1;
+    text-decoration: none;
+    padding-left: 15px;
+}
+.dropdown_content a:hover {
+    background-color: rgba(143, 161, 164, 0.8);
+}
+.show {
+    /* when the dropdown menu button is clicked, inner <div> (containing the dropdown content)
+     is added another class to, by Javascript. Then, */
+    display: block;
+}
+		     
+
+/* || main style */
+main {
+  width: 80vw;			/* 1 vw = 1 % of the viewport width */
+  margin: 2vh 10vw 2vh 10vw;		/* top left bottom right margins, respectively */
+  /* auto = the browser selects the suitable value. In most cases this is selected so that
+   the body content is centered */
+  background-color: rgba(243, 249, 253, 0.7); /* the last scalar is for opecity*/
+  padding: 2% 4% 2% 4%;
+  /* top, right, bottom, left paddings, respectively. 
+     % in this case is relative to the width of the containing block */
+  border: none;
+}
+
+/* || header style */
+h1 {
+    font-size: calc(2rem + 2.5vmin);
+    /* avoid setting font-size only with units relative to viewport size */
+    
+  text-align: center;
+
+  margin: 0;
+  padding: 0vmin 0 1vmin;    	/* top, right and left, bottom paddings */
+  color: #00539F;
+}
+
+/* || footer style */
+footer {
+    width: 80vw;			/* 1 vw = 1 % of the viewport width */
+    background-color: rgba(243, 249, 253, 0.7); /* the last scalar is for opecity*/
+
+    /* position: absolute; */
+    /* bottom: -2vh; */
+    /* negative value -> pushes it downward from the bottom of the containing block */
+    /* When absolute positioning is used, its position is relative to its containing block.
+       What ancestor element becomes the containing block of this element depends on the 
+       position property of its ancestors.
+       https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
+       If absolute positioning is used, its containing block element is its nearest ancestor 
+       element that has position value OTHER THAN static.
+       Since all block elements' default position value is static, <footer>'s 2 ancestors,
+       <body> and <html>, have both static positioning. Thus, they can't be <footer>'s containing
+       block. In that case, since <html> is contained in the so-called "initial containing block",
+       which is the viewport of the screen, <footer>'s containing block becomes that initial
+       containing block.
+       Thus, <footer>'s position becomes relative to the viewport.
+       https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Positioning#positioning_contexts
+       Thus, even when <body> element becomes long enough to exceed the viewport, since <footer>
+       with absolute positioning is placed relative to the viewport, <footer> is placed in the
+       middle of the <body> element, which is not what I wanted.
+       To change this and make the containing block of <footer> <body>, make the <body>'s 
+       position to "relative", as described in the above website. If no "top/bottom/left/right"
+       properties of <body> is changed, <body> doesn't change its position from its initial
+       position. And this gives what I want.
+       <- It didn't give what I wanted. Since absolute positioning removes <footer> from its
+          normal flow, there is no space left for <footer> at the bottom, which made <footer>
+	  overlap <main> content.
+       <- So just keeping the positioning of <footer> static gives what I want.
+   */
+
+    margin: 0vh 10vw;
+
+    text-align: center;
+    font-size: calc(1rem + 0.5vh);
+    /* avoid setting font-size only with units relative to viewport size */
+    height: 3vh;
+}
+footer p {
+    margin: 0;
+}
+#email {
+    text-decoration: none;
+}
+#email:hover {
+    color: red;
+}
+
+img {
+    max-width: 100%;
+    /* So that when a big screen is used, the images are not to be resized to more than 
+       their original size
+       From https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#responsive_images
+   */
+}

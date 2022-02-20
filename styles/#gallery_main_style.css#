@@ -1,0 +1,116 @@
+
+
+/* 
+   In CSS, if there are 2 or more styling instructions that are conflicting, the last 
+   one is used, if they have the same specificity (this concept is called cascade). 
+
+   Even when 2 CSS instructions are conflicting, if the former one has more specificity,
+   that instruction wins even though it's placed before the 2nd one (this is called specificity).
+   For example, a class selector (e.g. .class_name {} ) has more weight than an element selector
+   (e.g. h1 {} ).
+   Note that only a conflicting property is overriden. This helps to avoid repetition of CSS.
+   The specificity of CSS selector is score-based. For example, inline style="..." attribute
+   directly inside an element earns 1,000 points. Or, give +100 points for each ID selector
+   contained in an overall selector, e.g. h2 ul #id_name #id_name2 {} gets 200 points (+ 2 
+   points for the 2 element selectors).
+   For more rules, see the website below. In actual settings, you don't need to lower specificity
+   levels, because to beat 1 ID selector, you need 10 class selectors, for example.
+   There is a keyword that makes a rule with it supercedes any specificities, which is
+   "!important". For example, p {color: green !important;} always overrides any conflicting rules
+   , unless another rule also uses "!important" keyword, inside a selector with equal or more 
+   specificity than the 1st one, or that comes after the 1st one. But "!important" is advised
+   not to be used, since it breaks usual cascading rules.
+
+   There is another concept in CSS called inheritance. It means some CSS instructions applied
+   to an (html) element are inherited to its child elements, such as "color" and "font-family".
+   But some are not inherited, such as "width".
+   Every CSS property (e.g. color) can take inheritance controlling keywords, such as "inherit".
+   E.g. 
+   p {
+     color: inherit;
+   }
+
+   This concept of specificity, cascading, and inheritance are explained in 
+   https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_and_inheritance
+*/
+
+/* 
+   In this CSS, to adjust block sizes for both laptop/desktop and smartphone, I make all the 
+   length units relative to the width/height of the viewport.
+   When % is used, it's relative to some parent size or block width, and they are relative to
+   the viewport size, thus % also becomes relative to the viewport size.
+   
+   But it's a dangerous idea to set font-size only with viewport size, since in that case, 
+   website users cannot zoom into the characters (they stay relative to the viewport size).
+   To avoid that problem, for font-size, we should use a combination of some absolute unit
+   (such as pixel, or rem (root (<html> element) font-size), if the root has some absolute 
+   font-size) + a viewport unit, e.g. font-size: calc(1.5rem + 3vw);
+   See https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design#using_viewport_units_for_responsive_typography
+*/
+
+/* || page-specific styles */
+main .gallery {
+    display: grid;
+    grid-template-rows: 30vh 30vh; /* 2 rows */
+    grid-template-columns: 1fr 1fr; /* 2 columns (split the available space into equal 2 sizes)*/
+}
+
+.gallery a {
+    /* overflow: hidden;		/\* cut any overflown part of the photos *\/ */
+    /* Since box-shadow will be outside of the containing box of <a>, if overflow: hidden,
+       the shadow is cut, which is undesirable */
+    margin: auto;
+    /* by setting auto margin, the shape of <a> is automatically reshaped to each photo size
+       (if the <img>'s display mode is block). If I set some fixed value such as 2vmin here,
+       <a>'s size is fixed, and a gap between the hyperlink field and the photos is made.
+   */
+    /* I don't know why margin takes effect on <a>, whose initial display mode is inline.
+       Inline elements cannot have the effect of margin or padding, or border, can they?
+       <- According to some web searches, I found left and right margins can take effect on
+       inline elements too. But this "margin: auto;" places each image to the center of
+       each grid cell, including the top and bottom spaces. Why?
+   */
+}
+
+.gallery img {
+
+    /* offset-x | offset-y | blur-radius | spread-radius | color */
+    box-shadow: 0.5vw 0.5vh 2px 1px rgba(77, 77, 77, 0.2);
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow */
+
+    /* max-height: calc(30vh - 4*2vmin); */
+    /* 4*2vmin is the height of the containing box (<a>)'s margin and padding heights.
+       I want photos to be within the content, so I set the max-height to be the same as
+       the content box height (padding is for showing the box-shadow effect)
+   */
+    /* max-width: calc(36.8vw - 4*2vmin); */
+    /* 36.8vw is <main>'s content width divided by 2 (column number). <main>'s width is 80vw
+       , but since it has paddings for both sides of length 4% (== 80vw*0.04 = 3.2vw), the
+       actual content box's width is 80vw - 3.2*2vw = 73.6vw. Thus, content width per column
+       is 73.6vw / 2 = 36.8vw */
+
+    /* I changed how <a> adds margin. I set it to "auto". So it
+       now automatically fills the remaining space by <a>'s margin. That's because I changed
+       the display mode of <img> to "block".
+   */
+    max-height: 26vh;
+    max-width: 30vw;
+
+    /* <img>'s default display mode is inline */
+    display: block;
+    /* Without img's display mode being block, auto margin */
+}
+.gallery img:hover {
+    box-shadow: none;
+
+    position: relative;
+    left: 0.5vw;
+    top: 0.5vh;
+    /* Just deleting box-shadow effect doesn't make the photo look like being pushed by
+       the cursor. To make it look like so, I move the photo in the same way as the shadow 
+       is overcasted */
+}
+		    
+
+/* || navigation bar style */
+
