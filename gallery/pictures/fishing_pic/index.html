@@ -29,8 +29,8 @@
     <!--- meta name="description" content="..."> 's content appears on web search result 
 	pages.  --->
     
-    <link href="../styles/common_style.css" rel="stylesheet">
-    <link href="../styles/gallery_main_style.css" rel="stylesheet">
+    <link href="../../styles/common_style.css" rel="stylesheet">
+    <link href="../../styles/picture_page_style.css" rel="stylesheet">
     <!--- applying the external CSS stylesheet to this page. 
 	rel="stylesheet" indicates that this link is for CSS --->
     <!-- we can add multiple CSS files to 1 page. It is often a good idea to do so to
@@ -41,10 +41,10 @@
       see https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Organizing#break_large_stylesheets_into_multiple_smaller_ones
       -->
     <link href="https://fonts.googleapis.com/css?family=Faster+One&display=swap" rel="stylesheet">
-    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
     <!--- adding a custom icon to the webpage --->
     
-    <script src="../scripts/common.js" defer></script>
+    <script src="../../scripts/common.js" defer></script>
     <!--- javascript can be loaded in <head> element. But to make sure all HTML elements
 	are loaded before running the Javascript, we need the keyword "defer" --->
 
@@ -57,13 +57,12 @@
     </head>
     
   <body>
-    <!-- <p>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br>a<br></p> -->
     
     <!-- logo and menu button. Since they are out of normal flow order, I place them
 	 outside of any element -->
     <!--- logo image link to the home page --->
     <a href="https://takahiro02.github.io/" class="page_logo" id="logo_link">
-      <img src="../gengar.png" alt="My Webpage Logo, Gengar!" class="page_logo">
+      <img src="../../gengar.png" alt="My Webpage Logo, Gengar!" class="page_logo">
     </a>
     
     <!--- drop down menu  --->
@@ -78,39 +77,29 @@
 	<!--- the difference between id and class attributes is that id can be used only
 	    for 1 unique element in a page, while class can be used for multiple elements 
 	  --->
-	<a href="../index.html">Home</a>
-	<a href="../blog/blog_main.html">Blog</a>
-	<a href="../profile/profile.html">Profile</a>
+	<a href="../../../">Home</a>
+	<a href="../../">Gallery</a>
+	<a href="../../../blog/">Blog</a>
+	<a href="../../../profile/">Profile</a>
       </div>
     </nav>
 
     <main>
       <header>
-	<h1>Gallery</h1>
+	<h2>Me fishing a seaweed</h2>
 	<!-- p element is not allowed inside h1 element. Only "phrasing contents" are allowed
 	     inside h1 - h6 heading elements. For phrasing contents, see
 	     https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#phrasing_content
 	  -->
       </header>
 
-      <div class="gallery">
-	<a href="pictures/background_pic.html">
-	  <img src="images/background1.jpeg" alt="Seashore image">
-	  <!--- alt attribute specifies a text to be shown in case the image is not properly 
-	      displayed. It also lets search engines know what image to be displayed --->
-	</a>
-
-	<a href="pictures/fishing_pic.html">
-	  <img src="images/fishing.jpg" alt="Me fishing a seaweed...">
-	</a>
-
-	<a href="pictures/fishing2_pic.html">
-	  <img src="images/fishing2.jpg" alt="Me standing awkwardly on a bank near a seashore">
-	</a>
-	
-      </div>
+      <img src="../images/fishing.jpg" alt="Me fishing a seaweed...">
       
-      
+      <p>This guy looks so happy with fishing a seaweed.</p>
+
+      <p>Why does just a seaweed make him so happy?</p>
+
+      <p>He may be pretending to be happy, trying to hide sadness of catching only a seaweed on this day. Or he may be really happy, being made insane by catching no fish this day. The truth is in the dark mystery.</p>
     </main>
       
   </body>

@@ -49,9 +49,9 @@ var gallery_caption = document.getElementById("gallery_caption");
 
 // to change the content of the gallery, change the contents of these arrays
 const link_array = [
-    "gallery/pictures/background_pic.html",
-    "gallery/pictures/fishing_pic.html",
-    "gallery/pictures/fishing2_pic.html"
+    "gallery/pictures/background_pic/",
+    "gallery/pictures/fishing_pic/",
+    "gallery/pictures/fishing_pic2/"
 ];
 const photo_dir_array = [
     "gallery/images/background1.jpeg",
