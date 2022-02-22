@@ -149,6 +149,8 @@ figure {
     width: 40vw;
     margin: 0 auto 1vh;
     font-size: calc(1rem + 0.5vmin);
+
+    position: relative;
 }
 
 
@@ -186,14 +188,14 @@ ul li {
 ul .active {
     background-color: rgba(250,81, 81, 0.8);
 }
-.slidein {
-    animation: slidein 1s linear;
+.slidein_from_left {
+    animation: left_slidein 0.8s linear;
     /* the first value "zoomout" is animation-name, which can be any name, like a function name.
        The animation-name rule is specified afterward by @keyframes. This is like a function. */
 }
-@keyframes slidein {
+@keyframes left_slidein {
     0%{
-	bottom: 10vh;
+	right: 10vw;
 	/* this bottom property is connected position property. The <img>'s position is set 
 	   to relative, so that the caption appears below the photo (relative positioning keeps
 	   the original element block space in its normal flow, and moves the actual element
@@ -206,7 +208,21 @@ ul .active {
        https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Using_CSS_animations#adding_another_keyframe
    */
     100%{
-	bottom: 1vh;
+	right: 0;
+    }
+}
+
+.slidein_from_right {
+    animation: right_slidein 0.8s linear;
+    /* the first value "zoomout" is animation-name, which can be any name, like a function name.
+       The animation-name rule is specified afterward by @keyframes. This is like a function. */
+}
+@keyframes right_slidein {
+    0%{
+	left: 10vw;
+    }
+    100%{
+	left: 0;
     }
 }
 

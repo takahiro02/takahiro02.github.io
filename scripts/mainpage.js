@@ -64,26 +64,30 @@ const caption_array = [
     "Me standing awkwardly near the sea."
 ];
 
+var pre_btn = 0;		// record which control button is clicked previously
 photo_control_btn[0].onclick = function(){
     button_color_handler(0);
     gallery_photo.src = photo_dir_array[0];
     photo_link.href = link_array[0];
     gallery_caption.innerHTML = caption_array[0];
-    animation();		// it is defined below    
+    animation(0, pre_btn);		// it is defined below
+    pre_btn = 0;
 }
 photo_control_btn[1].onclick = function(){
     button_color_handler(1);
     gallery_photo.src = photo_dir_array[1];
     photo_link.href = link_array[1];
     gallery_caption.innerHTML = caption_array[1];
-    animation();		// it is defined below
+    animation(1, pre_btn);		// it is defined below
+    pre_btn = 1;    
 }
 photo_control_btn[2].onclick = function(){
     button_color_handler(2);
     gallery_photo.src = photo_dir_array[2];
     photo_link.href = link_array[2];
     gallery_caption.innerHTML = caption_array[2];
-    animation();		// it is defined below
+    animation(2, pre_btn);		// it is defined below
+    pre_btn = 2;
 }
 
 // remove "active" class from all buttons, and add "active" class only to 1 selected button
@@ -95,20 +99,43 @@ function button_color_handler(btn_index){
     photo_control_btn[btn_index].classList.add("active");
 }
 
-function animation(){
-    gallery_photo.classList.add("slidein"); // add a calss that performs animation to the image
+function animation(current_btn, pre_btn){
+    // change from which direction the slide in happens according to the relation of what
+    // button the user clicked this time and previous time.
+    var relation = current_btn - pre_btn;
+    if(relation > 0){
+	// move photo from right to left
+	gallery_photo.classList.add("slidein_from_right"); // add a calss that performs animation to the image
+	gallery_caption.classList.add("slidein_from_right");
 
-    // To add the animation each time users click the buttons, remove the animation class
-    // after 500 milliseconds.
-    setTimeout(function(){
-	gallery_photo.classList.remove("slidein");
-    }, 500)
-    // this means that it executes the defined function after the specified delay, 500 millisec.
-    // The time count starts when the browser reaches this setTimeout() function.
-    // 500 millisec is chosen because the animation's duration is 500 millisec. So until the
-    // animation effect is taking place, this script waits. If I set this delay to 0 sec,
-    // immediately after the "slidein" class is added, it is removed, so the animation is
-    // not performed at all.
+	// To add the animation each time users click the buttons, remove the animation class
+	// after 500 milliseconds.
+	setTimeout(function(){
+	    gallery_photo.classList.remove("slidein_from_right");
+	    gallery_caption.classList.remove("slidein_from_right");
+	}, 800);
+	// this means that it executes the defined function after the specified delay, 500 
+	// millisec. The time count starts when the browser reaches this setTimeout() function.
+	// 500 millisec is chosen because the animation's duration is 500 millisec. So until the
+	// animation effect is taking place, this script waits. If I set this delay to 0 sec,
+	// immediately after the "slidein" class is added, it is removed, so the animation is
+	// not performed at all.
+	// <- If I set this duration shorter than the duration of the animation, animation
+	//    jump happens. So be careful.
+    }
+    else if(relation < 0){
+	// move photo from left to right
+	gallery_photo.classList.add("slidein_from_left");
+	gallery_caption.classList.add("slidein_from_left");
+	setTimeout(function(){
+	    gallery_photo.classList.remove("slidein_from_left");
+	    gallery_caption.classList.remove("slidein_from_left");
+	}, 800);
+    }
+    else{
+	// The same button is clicked, then add no animation.
+    }
+
 }
 
 // function transition(){
