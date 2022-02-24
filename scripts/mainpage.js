@@ -100,7 +100,7 @@ function button_color_handler(btn_index){
 }
 
 function animation(current_btn, pre_btn){
-    // change from which direction the slide in happens according to the relation of what
+    // change from which direction the slide-in happens according to the relation of what
     // button the user clicked this time and previous time.
     var relation = current_btn - pre_btn;
     if(relation > 0){

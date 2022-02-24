@@ -202,6 +202,7 @@ ul .active {
 	   block relative to its original position), and the phoro appears from the top.
 	   Since overflow: hidden; is set to <figure> element, 
        */
+	opacity: 0.2
     }
     /* this tells the browser that at 0% of the way of the animation (at the beginning), 
        apply the rule above. This "0%" can be substituted by "from" 
@@ -209,6 +210,7 @@ ul .active {
    */
     100%{
 	right: 0;
+	opacity: 1;
     }
 }
 
@@ -220,9 +222,11 @@ ul .active {
 @keyframes right_slidein {
     0%{
 	left: 10vw;
+	opacity: 0.2;
     }
     100%{
 	left: 0;
+	opacity: 1;
     }
 }
 
