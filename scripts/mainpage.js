@@ -38,6 +38,7 @@ window.onload = function(){
 	home_subheading.innerHTML = 'Hello, ' + myName + '!';
 	name_change_button.innerHTML = "I'm not " + myName;	
     }
+
 }
 
 
@@ -64,31 +65,30 @@ const caption_array = [
     "Me standing awkwardly near the sea."
 ];
 
+// for switching images with time
+var pic_num = 1;
+setInterval(function(){
+    button_pushed(pic_num);
+    pic_num++;
+    if(pic_num == photo_dir_array.length){
+	pic_num = 0;
+    }
+}, 5000);
+
 var pre_btn = 0;		// record which control button is clicked previously
-photo_control_btn[0].onclick = function(){
-    button_color_handler(0);
-    gallery_photo.src = photo_dir_array[0];
-    photo_link.href = link_array[0];
-    gallery_caption.innerHTML = caption_array[0];
-    animation(0, pre_btn);		// it is defined below
-    pre_btn = 0;
+function button_pushed(btn_num){
+    button_color_handler(btn_num);
+    gallery_photo.src = photo_dir_array[btn_num];
+    photo_link.href = link_array[btn_num];
+    gallery_caption.innerHTML = caption_array[btn_num];
+    animation_appear(btn_num, pre_btn);		// it is defined below
+    pre_btn = btn_num;
+    pic_num = btn_num;		// for automatic photo switching above
 }
-photo_control_btn[1].onclick = function(){
-    button_color_handler(1);
-    gallery_photo.src = photo_dir_array[1];
-    photo_link.href = link_array[1];
-    gallery_caption.innerHTML = caption_array[1];
-    animation(1, pre_btn);		// it is defined below
-    pre_btn = 1;    
-}
-photo_control_btn[2].onclick = function(){
-    button_color_handler(2);
-    gallery_photo.src = photo_dir_array[2];
-    photo_link.href = link_array[2];
-    gallery_caption.innerHTML = caption_array[2];
-    animation(2, pre_btn);		// it is defined below
-    pre_btn = 2;
-}
+photo_control_btn[0].onclick = function(){button_pushed(0);}
+// photo_control_btn[0].onclick = button_pushed(0); doesn't work
+photo_control_btn[1].onclick = function(){button_pushed(1);}
+photo_control_btn[2].onclick = function(){button_pushed(2);}
 
 // remove "active" class from all buttons, and add "active" class only to 1 selected button
 function button_color_handler(btn_index){
@@ -99,6 +99,7 @@ function button_color_handler(btn_index){
     photo_control_btn[btn_index].classList.add("active");
 }
 
+// animation function for sliding photos. Currently not used
 function animation(current_btn, pre_btn){
     // change from which direction the slide-in happens according to the relation of what
     // button the user clicked this time and previous time.
@@ -109,14 +110,14 @@ function animation(current_btn, pre_btn){
 	gallery_caption.classList.add("slidein_from_right");
 
 	// To add the animation each time users click the buttons, remove the animation class
-	// after 500 milliseconds.
+	// after 800 milliseconds.
 	setTimeout(function(){
 	    gallery_photo.classList.remove("slidein_from_right");
 	    gallery_caption.classList.remove("slidein_from_right");
 	}, 800);
-	// this means that it executes the defined function after the specified delay, 500 
+	// this means that it executes the defined function after the specified delay, 800 
 	// millisec. The time count starts when the browser reaches this setTimeout() function.
-	// 500 millisec is chosen because the animation's duration is 500 millisec. So until the
+	// 800 millisec is chosen because the animation's duration is 500 millisec. So until the
 	// animation effect is taking place, this script waits. If I set this delay to 0 sec,
 	// immediately after the "slidein" class is added, it is removed, so the animation is
 	// not performed at all.
@@ -137,6 +138,36 @@ function animation(current_btn, pre_btn){
     }
 
 }
+
+// animation function just for appearing photos
+function animation_appear(current_btn, pre_btn){
+
+    if(current_btn != pre_btn){
+	gallery_photo.classList.add("appearing"); // add a calss that performs animation to the image
+	gallery_caption.classList.add("appearing");
+
+	// To add the animation each time users click the buttons, remove the animation class
+	// after 800 milliseconds.
+	setTimeout(function(){
+	    gallery_photo.classList.remove("appearing");
+	    gallery_caption.classList.remove("appearing");
+	}, 800);
+	// this means that it executes the defined function after the specified delay, 800 
+	// millisec. The time count starts when the browser reaches this setTimeout() function.
+	// 800 millisec is chosen because the animation's duration is 800 millisec. So until the
+	// animation effect is taking place, this script waits. If I set this delay to 0 sec,
+	// immediately after the "slidein" class is added, it is removed, so the animation is
+	// not performed at all.
+	// <- If I set this duration shorter than the duration of the animation, animation
+	//    jump happens. So be careful. The duration of the animation is set in
+	//    mainpage_style.css's animation class
+    }
+    else{
+	// The same button is clicked, then add no animation.
+    }
+
+}
+
 
 // function transition(){
 //     gallery_photo.classList.add("slidein_transition");

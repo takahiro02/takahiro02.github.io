@@ -188,6 +188,8 @@ ul li {
 ul .active {
     background-color: rgba(250,81, 81, 0.8);
 }
+
+/* 1st option of animation */
 .slidein_from_left {
     animation: left_slidein 0.8s linear;
     /* the first value "zoomout" is animation-name, which can be any name, like a function name.
@@ -214,6 +216,7 @@ ul .active {
     }
 }
 
+/* 2nd option of animation */
 .slidein_from_right {
     animation: right_slidein 0.8s linear;
     /* the first value "zoomout" is animation-name, which can be any name, like a function name.
@@ -226,6 +229,21 @@ ul .active {
     }
     100%{
 	left: 0;
+	opacity: 1;
+    }
+}
+
+/* 3rd option of animation */
+.appearing {
+    animation: opacity_changing 0.8s linear;
+    /* the first value "zoomout" is animation-name, which can be any name, like a function name.
+       The animation-name rule is specified afterward by @keyframes. This is like a function. */
+}
+@keyframes opacity_changing {
+    0%{
+	opacity: 0.2
+    }
+    100%{
 	opacity: 1;
     }
 }
